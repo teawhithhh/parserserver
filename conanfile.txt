@@ -1,0 +1,11 @@
+[requires]
+spdlog/1.10.0
+crowcpp-crow/1.2.0
+yaml-cpp/0.8.0
+
+[generators]
+CMakeToolchain
+CMakeDeps
+
+[layout]
+cmake_layout

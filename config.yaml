@@ -1,0 +1,6 @@
+goida:
+  penis:
+    keybind: "h"
+    keybindings:
+      commands: ["resize --width -2%"]
+    stats: "200"
