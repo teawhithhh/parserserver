@@ -13,18 +13,16 @@ class YamlParser : public Parser {
 public:
   YamlParser(std::filesystem::path path) : path_(std::move(path)) {}
 
-	std::unordered_map<std::string, std::string> read() override {
+	Node read() override {
 		std::unordered_map<std::string, std::string> data;
 
 		YAML::Node cfg = YAML::LoadFile(path_.string());
 
 		Node cfgRoot(cfg);
-		cfgRoot.printTree();
-
-		return data;
+		return cfgRoot;
   }
 
-  void write(std::unordered_map<std::string, std::string>) override {
+  void write(const Node&) override {
     // Метод для записи данных в YAML (пока не реализован)
   }
 

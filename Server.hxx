@@ -3,12 +3,12 @@
 
 #include "crow.h"
 #include "ParsersController.hxx"
-#include "nlohmann/json.hpp"
+#include "Node.hxx"
 
 class HashMapTranslator{
 	public:
-		static crow::json::wvalue translateTJ(const std::unordered_map<std::string, std::string>& tbl);
-		static std::unordered_map<std::string, std::string> translateTHM(const crow::json::wvalue& json);
+		static crow::json::wvalue translateTJ(const Node& tbl);
+		static Node translateTHM(const crow::json::wvalue& json);
 };
 
 class IRequestHandler {

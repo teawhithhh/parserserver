@@ -5,7 +5,7 @@
 #include <filesystem>
 #include <memory>
 
-enum class ParserFormat {json, yaml};
+enum class ParserFormat {yaml};
 
 struct ParserInfo{
 	ParserInfo(ParserFormat formatParser, std::filesystem::path pathToFile) : format(formatParser), pathFile(pathToFile) {};
@@ -35,8 +35,8 @@ class ParserFactory {
 class ParserController {
 	public:
 		ParserController(){};
-		void write(ParserInfo inf, std::unordered_map<std::string, std::string> tree);
-		std::unordered_map<std::string, std::string> read(ParserInfo inf);
+		void write(ParserInfo inf, const Node& tree);
+		Node read(ParserInfo inf);
 		void addParser(ParserInfo inf);
 		void deleteParser(ParserInfo inf);
 	private:

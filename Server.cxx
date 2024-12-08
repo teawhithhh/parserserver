@@ -1,56 +1,59 @@
 #include "Server.hxx"
 #include <spdlog/spdlog.h>
+#include <stack>
 
 TcpServer::TcpServer(int port) : m_port(port), m_controller(), m_settingsList() {}
 
-crow::json::wvalue HashMapTranslator::translateTJ(const std::unordered_map<std::string, std::string>& tbl) {
+crow::json::wvalue HashMapTranslator::translateTJ(const Node& root) {
 	crow::json::wvalue json_response;
+	std::stack<std::pair<const Node*, crow::json::wvalue*>> stack;
+	
+	stack.push(std::make_pair(&root, &json_response));
 
-	for (const auto& pair : tbl) {
-		json_response[pair.first] = pair.second;
+	while (!stack.empty())
+	{
+		auto [currentNode, currentJson] = stack.top();
+		stack.pop();
+
+		for (size_t i{0}; i<currentNode->getChildrensCount(); ++i)
+		{
+			const Node& child = currentNode->getChild(i);
+
+			auto [key, _] = child.getInfo();
+			(*currentJson)[key] = crow::json::wvalue();
+			stack.push(std::make_pair(&child, &(*currentJson)[key]));
+		}
+
+		auto [_, data] = currentNode->getInfo();
+		if (data!="")
+			(*currentJson)["data"] = data;
 	}
-
 	return json_response;
 }
 
-std::unordered_map<std::string, std::string> HashMapTranslator::translateTHM(const crow::json::wvalue& json) {
-	std::unordered_map<std::string, std::string> result;
-
-	try {
-		auto json_request = crow::json::load(json.dump());
-		if (!json_request) {
-				throw std::invalid_argument("Input JSON is not a valid object");
-		}
-
-		for (auto& it : json_request) {
-				result[it.key()] = it.s();
-		}
-	} catch (const std::exception& e) {
-		throw std::invalid_argument("Invalid JSON format: " + std::string(e.what()));
-	}
-
-	return result;
+Node HashMapTranslator::translateTHM(const crow::json::wvalue& json) {
+	
 }
 
 crow::response GetRequestHandler::handleRequest(const crow::request& req)
 {
-	try {
-		auto json_request = crow::json::load(req.body);
-		if (!json_request) {
-			return crow::response(400, R"({"status":"error","message":"Invalid JSON"})");
-		}
-
-		crow::json::wvalue json_response;
-		ParserInfo glazewm(ParserFormat::yaml, settingsList["glazewm"]);
-		std::unordered_map<std::string, std::string> glazewmConf = controller.read(glazewm);
-		spdlog::info("glazewm controller created");
-		glazewmConf["status"] = "success";
-		controller.write(glazewm, glazewmConf);
-		/* json_response["status"] = "success"; */
-		return crow::response(HashMapTranslator::translateTJ(glazewmConf));
-	} catch (const std::exception& e) {
-		return crow::response(500, R"({"status":"error","message":"Internal server error"})");
+	auto json_request = crow::json::load(req.body);
+	if (!json_request) {
+		return crow::response(400, R"({"status":"error","message":"Invalid JSON"})");
 	}
+	
+	if (json_request.has("config") && json_request["config"] == "glazewm"){
+		try {
+			crow::json::wvalue json_response;
+			ParserInfo glazewm(ParserFormat::yaml, settingsList["glazewm"]);
+			Node glazewmConf = controller.read(glazewm);
+			return crow::response(HashMapTranslator::translateTJ(glazewmConf));
+		} catch (const std::exception& e) {
+			return crow::response(500, R"({"status":"error","message":"Internal server error"})");
+		}	
+	}
+
+	return crow::response(400, R"({"status":"error","error":"config not exists"})");
 }
 
 crow::response PushRequestHandler::handleRequest(const crow::request& req)

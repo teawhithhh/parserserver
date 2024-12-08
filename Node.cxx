@@ -50,6 +50,15 @@ Node::Node(const YAML::Node& yamlNode, const std::string& parentKey)
 	}
 }
 
+size_t Node::getChildrensCount() const
+{
+	return childrens.size();
+}
+
+const Node& Node::getChild(size_t index) const {
+	return *childrens.at(index);
+}
+
 const std::pair<std::string, std::string> Node::getInfo() const {
 	return std::make_pair(key, data);
 }

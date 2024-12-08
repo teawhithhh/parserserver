@@ -1,13 +1,12 @@
 #ifndef PARSER_ABSTR
 #define PARSER_ABSTR
 
-#include <string>
-#include <unordered_map>
+#include "Node.hxx"
 
 class Parser{
 	public:
-		virtual std::unordered_map<std::string, std::string> read() = 0;
-		virtual void write(std::unordered_map<std::string, std::string>) = 0;
+		virtual Node read() = 0;
+		virtual void write(const Node&) = 0;
 
 		virtual ~Parser() = default;
 };
