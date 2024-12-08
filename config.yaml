@@ -1,10 +1,8 @@
-root:
-  value: "Root Node"
-  children:
-    - value: "Child 1"
-      children: []
-    - value: "Child 2"
-      children:
-        - value: "Child 2.1"
-          children: []
-
+ghoul1: SanyaKing
+ghoul2: AndreiImpression
+Maksim_squad:
+  admin: Maksim
+  strimer: Artem
+yarikSquad:
+  rak: yarik
+  ghoul: spletnya

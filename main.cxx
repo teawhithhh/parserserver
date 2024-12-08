@@ -9,7 +9,7 @@ int main()
 */
 	ParserController controller;
 
-	ParserInfo testParser(ParserFormat::yaml, "C:/Users/240821/electron/electron-app/cxx-back/config.yaml");
+	ParserInfo testParser(ParserFormat::yaml, "C:/Users/240821/electron/electron-app/cxx-back/testconfig.yaml");
 	controller.addParser(testParser);
 	auto config = controller.read(testParser);
 	/* for (const auto& [key, val] : config) */

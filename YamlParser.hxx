@@ -15,7 +15,52 @@
 
 class Node {
 	public:
-		Node(const std::string& key, const std::string& data) : key{key}, data{data} {}
+		Node(const std::string& key, const std::string& data = "") : key{key}, data{data} {}
+
+		Node(const YAML::Node& yamlNode, const std::string& parentKey = "root") 
+			: key(parentKey), data(yamlNode.IsScalar() ? yamlNode.as<std::string>() : "")
+		{
+			if (yamlNode.IsScalar())
+				return;
+
+			std::stack<std::pair<YAML::Node, Node*>> stack;
+			stack.push(std::make_pair(yamlNode, this));
+
+			while (!stack.empty())
+			{
+				auto [currentYamlNode, currentNode] = stack.top();
+				stack.pop();
+
+				if (currentYamlNode.IsMap()) {
+					for (const auto& item : currentYamlNode) {
+						auto childKey = item.first.as<std::string>();
+						const auto& childValue = item.second;
+
+						auto childNode = std::make_unique<Node>(childKey, childValue.IsScalar() ? childValue.as<std::string>() : "");
+						Node* childNodePtr = childNode.get();
+						currentNode->connectChild(std::move(childNode));
+
+						if (!childValue.IsScalar()) {
+							stack.push(std::make_pair(childValue, childNodePtr));
+						}
+					}
+				} else if (currentYamlNode.IsSequence()) {
+					int index = 0;
+					for (const auto& item : currentYamlNode)
+					{
+						std::string childKey = std::to_string(index++);
+
+						auto childNode = std::make_unique<Node>(childKey, item.IsScalar() ? item.as<std::string>() : "");
+						Node* childNodePtr = childNode.get();
+
+						currentNode->connectChild(std::move(childNode));
+						if (!item.IsScalar()) {
+							stack.push(std::make_pair(item, childNodePtr));
+						}
+					}
+				}
+			}
+		}
 
 		const std::pair<std::string, std::string> getInfo() const {
 			return std::make_pair(key, data);
@@ -23,7 +68,7 @@ class Node {
 
 		void printTree()
 		{
-			spdlog::info("{} : {}", key, data);
+			spdlog::info("{}: {}", key, data);
 
 			std::stack<std::pair<std::vector<std::unique_ptr<Node>>::iterator, int>> stack;
 			for (auto it = childrens.begin(); it!= childrens.end(); ++it)
@@ -44,7 +89,6 @@ class Node {
 
 				for (auto childIt = (*it)->childrens.begin(); childIt!=(*it)->childrens.end(); ++childIt)
 				{
-					tabSpace++;
 					stack.push(std::make_pair(childIt, tabSpace + 1));
 				}
 			}
@@ -140,15 +184,33 @@ public:
 	std::unordered_map<std::string, std::string> read() override {
 		std::unordered_map<std::string, std::string> data;
 
-		Node root{"root", "zxc"};
+		Node root{"root"};
 		root.createChild("ghoul1", "SanyaKing");
 		root.createChild("ghoul2", "AndreiImression");
 
-		std::unique_ptr<Node> skvadMaksima = std::make_unique<Node>("admin", "Maksim");
+		std::unique_ptr<Node> skvadMaksima = std::make_unique<Node>("Maksim squad");
+		skvadMaksima->createChild("admin", "Maksim");
 		skvadMaksima->createChild("strimer", "Artem");
+		
+		std::unique_ptr<Node> yarik = std::make_unique<Node>("yarikSquad");
+		yarik->createChild("rak", "yarik");
+		yarik->createChild("ghoul", "spletnya");
+
+		skvadMaksima->connectChild(std::move(yarik));
 
 		root.connectChild(std::move(skvadMaksima));
 		root.printTree();
+		root.deleteChild("Maksim squad");
+		spdlog::info("----");
+		root.printTree();
+		spdlog::info("----");
+		root.changeData("ghoul2", "zxcursed");
+		root.printTree();
+		spdlog::info("----");
+
+		YAML::Node cfg = YAML::LoadFile(path_.string());
+		Node secondRoot(cfg);
+		secondRoot.printTree();
 		return data;
   }
 
@@ -161,4 +223,3 @@ private:
 };
 
 #endif
-
