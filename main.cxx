@@ -9,13 +9,13 @@ int main()
 */
 	ParserController controller;
 
-	ParserInfo testParser(ParserFormat::yaml, "C:/Users/240821/electron/electron-app/cxx-back/testconfig.yaml");
+	ParserInfo testParser(ParserFormat::yaml, "C:/Users/240821/electron/electron-app/cxx-back/config.yaml");
 	controller.addParser(testParser);
 	auto config = controller.read(testParser);
-	for (const auto& [key, val] : config)
-	{
-		std::cout << key << " : " << val << std::endl;
-	}
+	/* for (const auto& [key, val] : config) */
+	/* { */
+	/* 	std::cout << key << " : " << val << std::endl; */
+	/* } */
 
 	/* TcpServer server(8080); */
 

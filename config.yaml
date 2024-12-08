@@ -1,6 +1,10 @@
-goida:
-  penis:
-    keybind: "h"
-    keybindings:
-      commands: ["resize --width -2%"]
-    stats: "200"
+root:
+  value: "Root Node"
+  children:
+    - value: "Child 1"
+      children: []
+    - value: "Child 2"
+      children:
+        - value: "Child 2.1"
+          children: []
+
