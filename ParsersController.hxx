@@ -35,7 +35,7 @@ class ParserFactory {
 class ParserController {
 	public:
 		ParserController(){};
-		void write(ParserInfo inf, std::unordered_map<std::string, std::string> tbl);
+		void write(ParserInfo inf, std::unordered_map<std::string, std::string> tree);
 		std::unordered_map<std::string, std::string> read(ParserInfo inf);
 		void addParser(ParserInfo inf);
 		void deleteParser(ParserInfo inf);
