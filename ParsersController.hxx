@@ -8,12 +8,17 @@
 enum class ParserFormat {yaml};
 
 struct ParserInfo{
-	ParserInfo(ParserFormat formatParser, std::filesystem::path pathToFile) : format(formatParser), pathFile(pathToFile) {};
-	ParserFormat format;
-	std::filesystem::path pathFile;
-	bool operator==(const ParserInfo& other) const {
-			return format == other.format && pathFile == other.pathFile;
+	ParserInfo() {}
+  ParserInfo(const ParserInfo& inf) : format{inf.format}, pathFile{inf.pathFile} {}
+	bool operator==(const ParserInfo &other) const {
+    return format == other.format && pathFile == other.pathFile;
 	}
+
+  ParserInfo(ParserFormat formatParser, std::filesystem::path pathToFile)
+      : format(formatParser), pathFile(pathToFile) {};
+
+  ParserFormat format;
+  std::filesystem::path pathFile;
 };
 
 namespace std {

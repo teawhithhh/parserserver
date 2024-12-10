@@ -1,0 +1,378 @@
+binding_modes:
+  0:
+    keybindings:
+      0:
+        bindings:
+          0: h
+          1: left
+        commands:
+          0: resize --width -2%
+      1:
+        bindings:
+          0: l
+          1: right
+        commands:
+          0: resize --width +2%
+      2:
+        bindings:
+          0: k
+          1: up
+        commands:
+          0: resize --height +2%
+      3:
+        bindings:
+          0: j
+          1: down
+        commands:
+          0: resize --height -2%
+      4:
+        bindings:
+          0: escape
+          1: enter
+        commands:
+          0: wm-disable-binding-mode --name resize
+    name: resize
+  1:
+    keybindings:
+      0:
+        bindings:
+          0: alt+shift+p
+        commands:
+          0: wm-disable-binding-mode --name pause
+    name: pause
+gaps:
+  inner_gap: 10px
+  outer_gap:
+    bottom: 10px
+    left: 10px
+    right: 10px
+    top: 50px
+general:
+  cursor_jump:
+    enabled: true
+    trigger: window_focus
+  focus_follows_cursor: false
+  startup_commands:
+    0: shell-exec %userprofile%/.glzr/zebar/start.bat
+  toggle_workspace_on_refocus: false
+keybindings:
+  0:
+    bindings:
+      0: alt+h
+      1: alt+left
+    commands:
+      0: focus --direction left
+  1:
+    bindings:
+      0: alt+l
+      1: alt+right
+    commands:
+      0: focus --direction right
+  10:
+    bindings:
+      0: alt+o
+    commands:
+      0: resize --height +2%
+  11:
+    bindings:
+      0: alt+i
+    commands:
+      0: resize --height -2%
+  12:
+    bindings:
+      0: alt+r
+    commands:
+      0: wm-enable-binding-mode --name resize
+  13:
+    bindings:
+      0: alt+shift+p
+    commands:
+      0: wm-enable-binding-mode --name pause
+  14:
+    bindings:
+      0: alt+v
+    commands:
+      0: toggle-tiling-direction
+  15:
+    bindings:
+      0: alt+shift+space
+    commands:
+      0: toggle-floating --centered
+  16:
+    bindings:
+      0: alt+t
+    commands:
+      0: toggle-tiling
+  17:
+    bindings:
+      0: alt+f
+    commands:
+      0: toggle-fullscreen
+  18:
+    bindings:
+      0: alt+m
+    commands:
+      0: toggle-minimized
+  19:
+    bindings:
+      0: alt+shift+q
+    commands:
+      0: close
+  2:
+    bindings:
+      0: alt+k
+      1: alt+up
+    commands:
+      0: focus --direction up
+  20:
+    bindings:
+      0: alt+shift+e
+    commands:
+      0: wm-exit
+  21:
+    bindings:
+      0: alt+shift+r
+    commands:
+      0: wm-reload-config
+  22:
+    bindings:
+      0: alt+shift+w
+    commands:
+      0: wm-redraw
+  23:
+    bindings:
+      0: alt+enter
+    commands:
+      0: shell-exec wezterm-gui
+  24:
+    bindings:
+      0: alt+s
+    commands:
+      0: focus --next-workspace
+  25:
+    bindings:
+      0: alt+a
+    commands:
+      0: focus --prev-workspace
+  26:
+    bindings:
+      0: alt+d
+    commands:
+      0: focus --recent-workspace
+  27:
+    bindings:
+      0: alt+1
+    commands:
+      0: focus --workspace 1
+  28:
+    bindings:
+      0: alt+2
+    commands:
+      0: focus --workspace 2
+  29:
+    bindings:
+      0: alt+3
+    commands:
+      0: focus --workspace 3
+  3:
+    bindings:
+      0: alt+j
+      1: alt+down
+    commands:
+      0: focus --direction down
+  30:
+    bindings:
+      0: alt+4
+    commands:
+      0: focus --workspace 4
+  31:
+    bindings:
+      0: alt+5
+    commands:
+      0: focus --workspace 5
+  32:
+    bindings:
+      0: alt+6
+    commands:
+      0: focus --workspace 6
+  33:
+    bindings:
+      0: alt+7
+    commands:
+      0: focus --workspace 7
+  34:
+    bindings:
+      0: alt+8
+    commands:
+      0: focus --workspace 8
+  35:
+    bindings:
+      0: alt+9
+    commands:
+      0: focus --workspace 9
+  36:
+    bindings:
+      0: alt+shift+a
+    commands:
+      0: move-workspace --direction left
+  37:
+    bindings:
+      0: alt+shift+f
+    commands:
+      0: move-workspace --direction right
+  38:
+    bindings:
+      0: alt+shift+d
+    commands:
+      0: move-workspace --direction up
+  39:
+    bindings:
+      0: alt+shift+s
+    commands:
+      0: move-workspace --direction down
+  4:
+    bindings:
+      0: alt+shift+h
+      1: alt+shift+left
+    commands:
+      0: move --direction left
+  40:
+    bindings:
+      0: alt+shift+1
+    commands:
+      0: move --workspace 1
+      1: focus --workspace 1
+  41:
+    bindings:
+      0: alt+shift+2
+    commands:
+      0: move --workspace 2
+      1: focus --workspace 2
+  42:
+    bindings:
+      0: alt+shift+3
+    commands:
+      0: move --workspace 3
+      1: focus --workspace 3
+  43:
+    bindings:
+      0: alt+shift+4
+    commands:
+      0: move --workspace 4
+      1: focus --workspace 4
+  44:
+    bindings:
+      0: alt+shift+5
+    commands:
+      0: move --workspace 5
+      1: focus --workspace 5
+  45:
+    bindings:
+      0: alt+shift+6
+    commands:
+      0: move --workspace 6
+      1: focus --workspace 6
+  46:
+    bindings:
+      0: alt+shift+7
+    commands:
+      0: move --workspace 7
+      1: focus --workspace 7
+  47:
+    bindings:
+      0: alt+shift+8
+    commands:
+      0: move --workspace 8
+      1: focus --workspace 8
+  48:
+    bindings:
+      0: alt+shift+9
+    commands:
+      0: move --workspace 9
+      1: focus --workspace 9
+  5:
+    bindings:
+      0: alt+shift+l
+      1: alt+shift+right
+    commands:
+      0: move --direction right
+  6:
+    bindings:
+      0: alt+shift+k
+      1: alt+shift+up
+    commands:
+      0: move --direction up
+  7:
+    bindings:
+      0: alt+shift+j
+      1: alt+shift+down
+    commands:
+      0: move --direction down
+  8:
+    bindings:
+      0: alt+u
+    commands:
+      0: resize --width -2%
+  9:
+    bindings:
+      0: alt+p
+    commands:
+      0: resize --width +2%
+window_behavior:
+  initial_state: tiling
+  state_defaults:
+    floating:
+      centered: true
+      shown_on_top: false
+    fullscreen:
+      maximized: false
+      shown_on_top: false
+window_effects:
+  focused_window:
+    border:
+      color: "#ffab94"
+      enabled: true
+  other_windows:
+    border:
+      color: "#a1a1a1"
+      enabled: true
+window_rules:
+  0:
+    commands:
+      0: ignore
+    match:
+      0:
+        window_process:
+          equals: zebar
+      1:
+        window_class:
+          regex: Chrome_WidgetWin_1|MozillaDialogClass
+        window_title:
+          regex: "[Pp]icture.in.[Pp]icture"
+      2:
+        window_process:
+          equals: PowerToys.PowerAccent
+      3:
+        window_class:
+          regex: HwndWrapper*
+        window_process:
+          equals: Lively
+workspaces:
+  0:
+    name: 1
+  1:
+    name: 2
+  2:
+    name: 3
+  3:
+    name: 4
+  4:
+    name: 5
+  5:
+    name: 6
+  6:
+    name: 7
+  7:
+    name: 8
+  8:
+    name: 9

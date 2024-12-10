@@ -3,10 +3,12 @@
 
 #include "Parser.hxx"
 #include <filesystem>
+#include <stack>
 #include <yaml-cpp/yaml.h>
 #include <spdlog/spdlog.h>
 #include "Node.hxx"
 #include <fstream>
+#include "nlohmann/json.hpp"
 
 class YamlParser : public Parser {
 public:
@@ -54,13 +56,31 @@ public:
   }
 
 private:
-	YAML::Node convertNode(const Node& root)
-	{
-		spdlog::info("Converting node to YAML::Node format...");
-		// доделать завтра
-		spdlog::info("Node successfully converted.");
-		return YAML::Node();
+
+	YAML::Node convertNode(const Node& root) {
+		spdlog::info("Converting Node to YAML::Node format...");
+
+		YAML::Node yamlNode;
+
+		// Если у узла есть данные (ключ-значение), то создаем соответствующий узел
+		if (!root.getInfo().second.empty()) {
+			yamlNode = root.getInfo().second;
+		}
+
+		// Если узел имеет дочерние элементы, нужно обработать их как карту (Map)
+		if (root.getChildrensCount() > 0) {
+			for (size_t i = 0; i < root.getChildrensCount(); ++i) {
+				const Node& childNode = root.getChild(i);
+				// Преобразуем каждого ребенка в новый узел
+				yamlNode[root.getChild(i).getInfo().first] = convertNode(childNode);
+			}
+		}
+
+		spdlog::info("Node successfully converted to YAML::Node.");
+		return yamlNode;
 	}
+
+
   std::filesystem::path path;
 };
 

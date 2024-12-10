@@ -11,21 +11,23 @@ class IRequestHandler {
 };
 
 class GetRequestHandler : public IRequestHandler {
+	using ParserInfoMap = std::unordered_map<std::string, ParserInfo>;
 	public:
-		explicit GetRequestHandler(std::unordered_map<std::string, std::filesystem::path>& sList, ParserController& cntrl) : settingsList{sList}, controller{cntrl} {};
+		explicit GetRequestHandler(ParserInfoMap& sList, ParserController& cntrl) : settingsList{sList}, controller{cntrl} {};
 		crow::response handleRequest(const crow::request& req) override;
 	private:
 		ParserController& controller;
-		std::unordered_map<std::string, std::filesystem::path>& settingsList;
+		const ParserInfoMap& settingsList;
 };
 
 class PushRequestHandler : public IRequestHandler {
+	using ParserInfoMap = std::unordered_map<std::string, ParserInfo>;
 	public:
-		explicit PushRequestHandler(std::unordered_map<std::string, std::filesystem::path>& sList, ParserController& cntrl) : settingsList{sList}, controller{cntrl} {};
+		explicit PushRequestHandler(ParserInfoMap& sList, ParserController& cntrl) : settingsList{sList}, controller{cntrl} {};
 		crow::response handleRequest(const crow::request& req) override;
 	private:
 		ParserController& controller;
-		std::unordered_map<std::string, std::filesystem::path>& settingsList;
+		const ParserInfoMap& settingsList;
 };
 
 class RouteManager {
@@ -48,13 +50,11 @@ private:
 	crow::SimpleApp m_app;
 	RouteManager m_manager;
 
+	ParserController m_controller;
+	std::unordered_map<std::string, ParserInfo> m_settingsList;
+
 	void setupSettingsList();
 	void setupController();
-
-	ParserController m_controller;
-	std::unordered_map<std::string, std::filesystem::path> m_settingsList;
-
-	void initializeSettingsList();
 };
 
 #endif
