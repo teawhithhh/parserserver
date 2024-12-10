@@ -9,11 +9,11 @@ class Node {
 		Node(const YAML::Node& yamlNode, const std::string& parentKey = "root");
 
 		const std::pair<std::string, std::string> getInfo() const;
+		void setInfo(const std::pair<std::string, std::string>& info);
 		size_t getChildrensCount() const;
 		const Node& getChild(size_t index) const;
 
 		void printTree();
-		void changeData(const std::string& key, const std::string& newData);
 		void deleteChild(const std::string& key);
 		void createChild(const std::string& key, const std::string& data);
 		void connectChild(std::unique_ptr<Node>&& child);

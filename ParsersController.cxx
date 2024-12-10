@@ -1,7 +1,7 @@
 #include "ParsersController.hxx"
 #include "YamlParser.hxx"
 
-std::unique_ptr<Parser> ParserFactory::createParser(ParserInfo inf)
+std::unique_ptr<Parser> ParserFactory::createParser(const ParserInfo& inf)
 {
 	switch(inf.format)
 	{
@@ -14,22 +14,22 @@ std::unique_ptr<Parser> ParserFactory::createParser(ParserInfo inf)
 	}
 }
 
-void ParserController::write(ParserInfo inf, const Node& tree)
+void ParserController::write(const ParserInfo& inf, const Node& tree)
 {
 	parsers[inf]->write(tree);
 }
 
-Node ParserController::read(ParserInfo inf)
+Node ParserController::read(const ParserInfo& inf)
 {
 	return parsers[inf]->read();
 }
 
-void ParserController::addParser(ParserInfo inf)
+void ParserController::addParser(const ParserInfo& inf)
 {
 	parsers[inf] = ParserFactory::createParser(inf);
 }
 
-void ParserController::deleteParser(ParserInfo inf)
+void ParserController::deleteParser(const ParserInfo& inf)
 {
 	parsers.erase(inf);
 }

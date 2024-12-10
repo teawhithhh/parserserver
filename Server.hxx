@@ -4,11 +4,12 @@
 #include "crow.h"
 #include "ParsersController.hxx"
 #include "Node.hxx"
+#include "nlohmann/json.hpp"
 
 class HashMapTranslator{
 	public:
-		static crow::json::wvalue translateTJ(const Node& tbl);
-		static Node translateTHM(const crow::json::wvalue& json);
+		static std::string translateTJ(const Node& root);
+		static Node translateTHM(const nlohmann::json& json);
 };
 
 class IRequestHandler {

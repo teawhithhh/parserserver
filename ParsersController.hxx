@@ -29,16 +29,16 @@ namespace std {
 
 class ParserFactory {
 	public:
-		static std::unique_ptr<Parser> createParser(ParserInfo inf);
+		static std::unique_ptr<Parser> createParser(const ParserInfo& inf);
 };
 
 class ParserController {
 	public:
 		ParserController(){};
-		void write(ParserInfo inf, const Node& tree);
-		Node read(ParserInfo inf);
-		void addParser(ParserInfo inf);
-		void deleteParser(ParserInfo inf);
+		void write(const ParserInfo& inf, const Node& tree);
+		Node read(const ParserInfo& inf);
+		void addParser(const ParserInfo& inf);
+		void deleteParser(const ParserInfo& inf);
 	private:
 		std::unordered_map<ParserInfo, std::unique_ptr<Parser>> parsers;
 };
